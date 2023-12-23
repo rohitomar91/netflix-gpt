@@ -5,14 +5,13 @@ import {
 } from "firebase/auth";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { BG_IMAGE, USER_AVATAR } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { addUser } from "../utils/userSlice";
 import { checkValidData } from "../utils/validate";
 import Header from "./Header";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -52,8 +51,7 @@ const Login = () => {
           // Update user profile with provided user name
           updateProfile(user, {
             displayName: name,
-            photoURL:
-              "https://lh3.googleusercontent.com/ogw/ANLem4Z9-9Ie7ehSPJkxRnhws3y8ose9EO6O_EEKlxT33Q=s32-c-mo",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -65,7 +63,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -78,9 +75,8 @@ const Login = () => {
     // Case: sign in
     else {
       signInWithEmailAndPassword(auth, email.current.value, pass.current.value)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          navigate("/browse");
+        .then(() => {
+          // Sign in success
         })
         .catch((error) => {
           setErrorMessage(error.errorCode + "-" + error.message);
@@ -93,10 +89,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/ca6a7616-0acb-4bc5-be25-c4deef0419a7/c5af601a-6657-4531-8f82-22e629a3795e/IN-en-20231211-popsignuptwoweeks-perspective_alpha_website_large.jpg"
-          alt="bg"
-        />
+        <img src={BG_IMAGE} alt="bg" />
       </div>
       <form
         className="absolute px-20 py-12 bg-black w-[25%] my-36 mx-auto right-0 left-0 text-white bg-opacity-80 rounded-md"
