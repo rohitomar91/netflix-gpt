@@ -26,6 +26,9 @@
 - Update store with trailer video data
 - Embed the YT trailer video and add autoplay and mute
 - Styled main container
+- Build Secondary component for movie list by themes
+- Movie card
+- TMDB image CDN Urls integration
 
 # Features
 
